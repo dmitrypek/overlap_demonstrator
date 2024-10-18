@@ -153,10 +153,10 @@ contains
         case (1)
             do i=1,ntasks-1
                 idest = mod(mytask+i,ntasks)
-                call mpi_isend(sendbuf1(off(idest),this%id),numsend,MPI_REAL,idest, &
+                call mpi_isend(sendbuf1(1+off(idest),this%id),numsend,MPI_REAL,idest, &
                     & mytask,mpi_comm_world,send_reqs(i,this%id),ierr)
                 isource = mod(mytask-i+ntasks,ntasks)
-                call mpi_irecv(recvbuf(off(isource),this%id),numrecv,MPI_REAL,isource,isource, &
+                call mpi_irecv(recvbuf(1+off(isource),this%id),numrecv,MPI_REAL,isource,isource, &
                     & mpi_comm_world,recv_reqs(i,this%id),ierr)
             enddo
             this%nops = ntasks-1
